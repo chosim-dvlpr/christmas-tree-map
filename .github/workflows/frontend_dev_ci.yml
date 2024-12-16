@@ -32,6 +32,9 @@ jobs:
       contents: read
       packages: write
       actions: write
+    defaults:
+      run:
+        working-directory: ./frontend
 
     outputs:
       lint: ${{ steps.yarn_lint_result.outputs.result }}
