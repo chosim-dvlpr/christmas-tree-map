@@ -99,12 +99,13 @@ jobs:
           --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} \
           --storybook-config-dir=.storybook \
           --only-changed \
-          --auto-accept-changes \
-          | tee chromatic-log.txt
-  
-          storybook_url=$(grep -o 'https://.*chromatic.com/.*' chromatic-log.txt | head -n 1)
-          echo "storybook_url=$storybook_url" >> $GITHUB_ENV
+          --auto-accept-changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug Chromatic Output
+        run: echo "${{ steps.chromatic.outputs.storybookUrl }}"
+      
       - name: Get Current Time
         uses: josStorer/get-current-time@v2
         id: current-time
@@ -125,5 +126,6 @@ jobs:
         with:
           comment_tag: ${{github.event.number}}-storybook
           message: |
-            💄 Storybook: ${{ needs.publish-storybook.outputs.storybook_url }}
-            🕖 Update: ${{ needs.publish-storybook.outputs.current_time }}
+            🚀 **Storybook Published**  
+            👉 [View Storybook](${{ steps.chromatic.outputs.storybookUrl }})
+            🕖 [Update Time](${{ needs.publish-storybook.outputs.current_time }})
