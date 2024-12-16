@@ -104,7 +104,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Debug Chromatic Output
-        run: echo "${{ steps.chromatic.outputs.storybookUrl }}"
+        run: echo "${{ steps.chromatic.outputs }}"
       
       - name: Get Current Time
         uses: josStorer/get-current-time@v2
@@ -126,6 +126,6 @@ jobs:
         with:
           comment_tag: ${{github.event.number}}-storybook
           message: |
-            🚀 **Storybook Published**  
-            👉 [View Storybook](${{ steps.chromatic.outputs.storybookUrl }})
-            🕖 [Update Time](${{ needs.publish-storybook.outputs.current_time }})
+            **Storybook Published**  
+            💄 [View Storybook](${{ steps.chromatic.outputs.storybookUrl }})
+            🕖 Update Time : ${{ needs.publish-storybook.outputs.current_time }}
