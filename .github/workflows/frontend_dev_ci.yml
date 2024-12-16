@@ -120,7 +120,7 @@ jobs:
 
     outputs:
       storybook_url: ${{ steps.set_storybook_url.outputs.storybook_url }}
-      current_time: ${{ steps.current-time.outputs.formattedTime }}
+      current_time: ${{ steps.current_time.outputs.formattedTime }}
 
   github-bot-storybook:
     runs-on: ubuntu-latest
