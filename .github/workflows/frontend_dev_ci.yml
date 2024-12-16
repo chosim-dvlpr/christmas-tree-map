@@ -21,7 +21,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: changes
         with:
-          filters:
+          filters: |
             frontend:
               - 'frontend/**'
 
@@ -65,7 +65,7 @@ jobs:
           pwd
           yarn build
 
-      - name: Save build result
+      - name: Save Run build result
         id: yarn_build_result
         run: echo "result=${{steps.yarn_build.outcome}}" >> $GITHUB_OUTPUT
 
