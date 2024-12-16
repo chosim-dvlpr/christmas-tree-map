@@ -73,45 +73,45 @@ jobs:
         run: echo "result=${{steps.yarn_build.outcome}}" >> $GITHUB_OUTPUT
 
   publish-storybook:
-  runs-on: ubuntu-latest
-  defaults:
-    run:
-      working-directory: ./frontend
-  needs: FE_CI
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    needs: FE_CI
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.15.1'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
 
-    - name: Install dependencies
-      run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-    - name: Publish Storybook
-      id: publish_storybook
-      run: |
-        npx chromatic \
-        --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} \
-        --storybook-config-dir=.storybook \
-        --only-changed \
-        --auto-accept-changes
-        echo "storybook_url=https://your-storybook-url.chromatic.com" >> $GITHUB_ENV
+      - name: Publish Storybook
+        id: publish_storybook
+        run: |
+          npx chromatic \
+          --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} \
+          --storybook-config-dir=.storybook \
+          --only-changed \
+          --auto-accept-changes
+          echo "storybook_url=https://your-storybook-url.chromatic.com" >> $GITHUB_ENV
 
-    - name: Get Current Time
-      uses: josStorer/get-current-time@v2
-      id: current-time
-      with:
-        format: 'YYYY년 MM월 DD일 HH:mm:ss'
-        utcOffset: '+09:00'
+      - name: Get Current Time
+        uses: josStorer/get-current-time@v2
+        id: current-time
+        with:
+          format: 'YYYY년 MM월 DD일 HH:mm:ss'
+          utcOffset: '+09:00'
 
-  outputs:
-    storybook_url: ${{ env.storybook_url }}
-    current_time: ${{ steps.current-time.outputs.formattedTime }}
+    outputs:
+      storybook_url: ${{ env.storybook_url }}
+      current_time: ${{ steps.current-time.outputs.formattedTime }}
 
   github-bot-storybook:
     runs-on: ubuntu-latest
