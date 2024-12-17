@@ -32,9 +32,9 @@ jobs:
       contents: read
       packages: write
       actions: write
-    defaults:
-      run:
-        working-directory: ./frontend
+    # defaults:
+    #   run:
+    #     working-directory: ./frontend
 
     outputs:
       lint: ${{ steps.yarn_lint_result.outputs.result }}
@@ -64,9 +64,7 @@ jobs:
 
       - name: Run build
         id: yarn_build
-        run: |
-          pwd
-          yarn build
+        run: yarn build
 
       - name: Save Run build result
         id: yarn_build_result
@@ -74,9 +72,9 @@ jobs:
 
   publish-storybook:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
+    # defaults:
+    #   run:
+    #     working-directory: ./frontend
     needs: FE_CI
     steps:
       - name: Checkout code
@@ -101,16 +99,13 @@ jobs:
           --only-changed \
           --auto-accept-changes \
           | tee chromatic-log.txt
-    
+
       - name: Extract Storybook URL
         id: set_storybook_url
         run: |
           storybook_url=$(grep -o 'https://67604086bae1648966795b11-[a-z0-9]*\.chromatic\.com/' chromatic-log.txt | head -n 1)
           echo "storybook_url=${storybook_url}" >> $GITHUB_OUTPUT
 
-      - name: Debug Chromatic Output
-        run: echo "${{ steps.set_storybook_url.outputs.storybook_url }}"
-      
       - name: Get Current Time
         uses: josStorer/get-current-time@v2
         id: current_time
