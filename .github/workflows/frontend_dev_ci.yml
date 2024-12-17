@@ -17,13 +17,13 @@ jobs:
     outputs:
       frontend: ${{ steps.changes.outputs.frontend }}
 
-    steps:
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            frontend:
-              - 'frontend/**'
+    # steps:
+    #   - uses: dorny/paths-filter@v3
+    #     id: changes
+    #     with:
+    #       filters: |
+    #         frontend:
+    #           - 'frontend/**'
 
   FE_CI:
     runs-on: ubuntu-latest
