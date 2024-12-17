@@ -1,5 +1,5 @@
 name: ✨ Frontend Dev CI
-
+ 
 on:
   pull_request:
     types: [opened, reopened, synchronize]
