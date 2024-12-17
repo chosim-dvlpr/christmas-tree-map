@@ -98,6 +98,7 @@ jobs:
           --storybook-config-dir=.storybook \
           --only-changed \
           --auto-accept-changes \
+          --only-changed \
           | tee chromatic-log.txt
 
       - name: Extract Storybook URL
