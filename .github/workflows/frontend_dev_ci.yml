@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+#   cancel-in-progress: true
+
 jobs:
   FE_CI:
     runs-on: ubuntu-latest
@@ -40,8 +44,7 @@ jobs:
             ${{ runner.os }}-node_modules-
 
       - name: Install dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Run lint
         id: yarn_lint
@@ -88,7 +91,7 @@ jobs:
 
       - name: Verify dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Publish Storybook
         id: publish_storybook
