@@ -1,5 +1,5 @@
 name: ✨ Frontend Dev CI
- 
+
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -62,7 +62,7 @@ jobs:
         id: yarn_build_result
         run: echo "result=${{steps.yarn_build.outcome}}" >> $GITHUB_OUTPUT
 
-  publish-storybook:
+  PUBLISH_STORYBOOK:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -120,9 +120,9 @@ jobs:
       storybook_url: ${{ steps.set_storybook_url.outputs.storybook_url }}
       current_time: ${{ steps.current_time.outputs.formattedTime }}
 
-  github-bot-storybook:
+  GITHUB_BOT_STORYBOOK:
     runs-on: ubuntu-latest
-    needs: [publish-storybook]
+    needs: [PUBLISH_STORYBOOK]
     steps:
       - name: Record PR Comment
         uses: thollander/actions-comment-pull-request@v2
@@ -130,5 +130,5 @@ jobs:
           comment_tag: ${{github.event.number}}-storybook
           message: |
             **Storybook Published**  
-            💄 [View Storybook](${{ needs.publish-storybook.outputs.storybook_url }})
-            🕖 Update Time : ${{ needs.publish-storybook.outputs.current_time }}
+            💄 [View Storybook](${{ needs.PUBLISH_STORYBOOK.outputs.storybook_url }})
+            🕖 Update Time : ${{ needs.PUBLISH_STORYBOOK.outputs.current_time }}
