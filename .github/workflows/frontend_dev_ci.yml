@@ -71,9 +71,9 @@ jobs:
 
   publish-storybook:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./frontend
+    defaults:
+      run:
+        working-directory: ./frontend
     needs: FE_CI
     steps:
       - name: Checkout code
